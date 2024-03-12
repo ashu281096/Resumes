@@ -18,3 +18,20 @@ for output in outputs:
     generated_text = output.outputs[0].text
     print(f"Prompt: {prompt!r}, Generated text: {generated_text!r}")
     
+
+
+
+from transformers import AutoTokenizer, pipeline
+import transformers
+import torch
+
+model = "meta-llama/Llama-2-7b-chat-hf" # meta-llama/Llama-2-7b-hf
+
+tokenizer = AutoTokenizer.from_pretrained(model, use_auth_token=True)
+
+llama_pipeline = pipeline(
+    "text-generation",  # LLM task
+    model=model,
+    torch_dtype=torch.float16,
+    device_map="sequential",
+)
